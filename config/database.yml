@@ -20,3 +20,4 @@ production:
   database: nikocale
   username: nikocale
   password: nikocale
+  url: <%= ENV['DATABASE_URL'] %>
