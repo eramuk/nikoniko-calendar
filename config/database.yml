@@ -8,8 +8,8 @@ default: &default
   timeout: 5000
 
 test:
-<<: *default
-database: nikocale_test
+  <<: *default
+  database: nikocale_test
 
 development:
   <<: *default
