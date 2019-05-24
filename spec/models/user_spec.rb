@@ -25,9 +25,7 @@ RSpec.describe User, type: :model do
   end
 
   it "emailはユニークであること" do
-    expect {
-      user1 = create(:user, name: "alice1", email: "alice@example.com")
-      user2 = create(:user, name: "alice2", email: "alice@example.com")
-    }.to raise_error(ActiveRecord::RecordInvalid)
+    create(:user, name: "alice1", email: "alice@example.com")
+    expect(build(:user, name: "alice2", email: "alice@example.com")).not_to be_valid
   end
 end
