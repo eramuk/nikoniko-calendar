@@ -28,4 +28,14 @@ RSpec.describe User, type: :model do
     create(:user, name: "alice1", email: "alice@example.com")
     expect(build(:user, name: "alice2", email: "alice@example.com")).not_to be_valid
   end
+
+  it "passwordが空のときはバリデーションされること" do
+    @user.password = @user.password_confirmation = " " * User::PASSWORD_MIN_LENGTH
+    expect(@user).not_to be_valid
+  end
+
+  it "passwordが最小文字数より大きいこと" do
+    @user.password = @user.password_confirmation = "a" * (User::PASSWORD_MIN_LENGTH - 1)
+    expect(@user).not_to be_valid
+  end
 end
