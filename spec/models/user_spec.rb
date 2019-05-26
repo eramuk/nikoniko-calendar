@@ -1,27 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before do
-    @user = build(:user)
-  end
+  let(:user) { build(:user) }
 
   it "ユーザーを作成できること" do
-    expect(@user).to be_valid
+    expect(user).to be_valid
   end
 
   it "nameが空のときはバリデーションされること" do
-    @user.name = ""
-    expect(@user).not_to be_valid
+    user.name = ""
+    expect(user).not_to be_valid
   end
 
   it "emailが空のときはバリデーションされること" do
-    @user.email = ""
-    expect(@user).not_to be_valid
+    user.email = ""
+    expect(user).not_to be_valid
   end
 
   it "emailの不正なフォーマットはバリデーションされること" do
-    @user.email = '"hoge"@example.com'
-    expect(@user).not_to be_valid
+    user.email = '"hoge"@example.com'
+    expect(user).not_to be_valid
   end
 
   it "emailはユニークであること" do
@@ -30,12 +28,12 @@ RSpec.describe User, type: :model do
   end
 
   it "passwordが空のときはバリデーションされること" do
-    @user.password = @user.password_confirmation = " " * User::PASSWORD_MIN_LENGTH
-    expect(@user).not_to be_valid
+    user.password = user.password_confirmation = " " * User::PASSWORD_MIN_LENGTH
+    expect(user).not_to be_valid
   end
 
   it "passwordが最小文字数より大きいこと" do
-    @user.password = @user.password_confirmation = "a" * (User::PASSWORD_MIN_LENGTH - 1)
-    expect(@user).not_to be_valid
+    user.password = user.password_confirmation = "a" * (User::PASSWORD_MIN_LENGTH - 1)
+    expect(user).not_to be_valid
   end
 end
