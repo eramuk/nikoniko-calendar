@@ -14,13 +14,13 @@ feature "Sign up" do
   it { should have_field("Password Confirmation") }
   it { should have_button("SUBMIT") }
 
-  scenario "Email can't be blank" do
+  scenario "should validation error" do
     visit signup_path
     fill_in("Name", with: "alice")
     fill_in("Email", with: "")
-    fill_in("Password", with: "test1234")
+    fill_in("Password", with: "")
     click_button("SUBMIT")
 
-    expect(page).to have_selector("li", text: "Email can't be blank")
+    expect(page).to have_selector("ul.error-messages")
   end
 end

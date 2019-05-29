@@ -2,7 +2,7 @@
   <div id="error_explanation">
     <div class="card red darken-1">
       <div class="card-content white-text">
-        <ul>
+        <ul class="error-messages">
         <% @user.errors.full_messages.uniq.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
