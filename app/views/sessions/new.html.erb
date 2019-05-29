@@ -1,0 +1,23 @@
+<% provide(:title, "Sign in") %>
+
+<div class="container">
+  <h1>Sign in</h1>
+
+  <div class="row">
+    <%= form_for(:session, url: login_path) do |f| %>
+      <div class="input-field">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'validate form-control' %>
+      </div>
+
+      <div class="input-field">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'validate form-control' %>
+      </div>
+
+      <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
+    <% end %>
+  </div>
+
+  <p>New user? <%= link_to "Sign up", signup_path %></p>
+</div>
