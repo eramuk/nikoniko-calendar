@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
+  gem "sqlite3"
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
   gem 'pry-byebug'
@@ -33,10 +34,13 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :production do
+  gem 'pg', '~> 1.1.4'
+end
 
-gem 'pg', '~> 1.1.4'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 gem 'jquery-rails'
 gem 'materialize-sass'
 gem 'material_icons'
