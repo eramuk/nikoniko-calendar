@@ -1,0 +1,7 @@
+<% unless flash.empty? %>
+  <script type="text/javascript">
+    <% flash.each do |key, value| %>
+      M.toast({html: '<%= value %>', displayLength: "stay"})
+    <% end %>
+  </script>
+<% end %>

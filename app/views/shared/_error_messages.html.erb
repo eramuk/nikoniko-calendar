@@ -1,0 +1,15 @@
+<% unless flash.empty? %>
+  <div id="error_explanation">
+    <div class="card red darken-1">
+      <div class="card-content white-text">
+        <ul class="error-messages">
+        <% flash.each do |key, value| %>
+          <% value.split("\n").each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

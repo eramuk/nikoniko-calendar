@@ -8,7 +8,9 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user
     else
-      render 'new'
+      flash.now[:danger] = @user.errors.full_messages.uniq.join("\n")
+      @user = User.new(user_params)
+      render "new"
     end
   end
 
