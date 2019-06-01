@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       redirect_to @user
     else
       flash.now[:danger] = @user.errors.full_messages.uniq.join("\n")
