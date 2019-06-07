@@ -23,6 +23,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "Successfully update"
+      redirect_to @user
+    else
+      flash.now[:danger] = @user.errors.full_messages.uniq.join("\n")
+      render "edit"
+    end
+  end
+
   private
 
   def user_params

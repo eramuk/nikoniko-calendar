@@ -1,0 +1,21 @@
+<% unless flash.empty? %>
+  <div id="alert-messages">
+    <% flash.each do |type, messages| %>
+      <%
+        color = case type
+          when "success" then "green"
+          when "danger" then "red darken-1"
+        end
+      %>
+      <div class="card <%= color %>">
+        <div class="card-content white-text">
+          <ul class="messages">
+            <% messages.split("\n").each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
