@@ -3,25 +3,45 @@
 
   <div class="row">
     <%= form_with model: @user do |f| %>
+      <%
+        field_info = {}
+        flash.to_hash["form"]&.each do |field, messages|
+          field_info[field] = {
+            message: "#{field.capitalize} #{messages.first}",
+            valid: "invalid"
+          }
+        end
+      %>
+
+      <%= field_info.inspect %>
 
       <div class="input-field">
         <%= f.label :name %>
-        <%= f.text_field :name, class: 'validate form-control' %>
+        <%= f.text_field :name, class: "validate #{field_info.dig(:name, :valid)} form-control" %>
+        <% if field_info.dig(:name) %>
+          <span class="helper-text" data-error="<%= field_info[:name][:message] %>"></span>
+        <% end %>
       </div>
 
       <div class="input-field">
         <%= f.label :email %>
-        <%= f.text_field :email, class: 'validate form-control' %>
+        <%= f.text_field :email, class: "validate #{field_info.dig(:email, :valid)} form-control" %>
+        <% if field_info.dig(:email) %>
+          <span class="helper-text" data-error="<%= field_info[:email][:message] %>"></span>
+        <% end %>
       </div>
 
       <div class="input-field">
         <%= f.label :password %>
-        <%= f.password_field :password, class: 'validate form-control' %>
+        <%= f.password_field :password, class: "validate #{field_info.dig(:password, :valid)} form-control" %>
+        <% if field_info.dig(:password) %>
+          <span class="helper-text" data-error="<%= field_info[:password][:message] %>"></span>
+        <% end %>
       </div>
 
       <div class="input-field">
         <%= f.label :password_confirmation, "Password Confirmation" %>
-        <%= f.password_field :password_confirmation, class: 'validate form-control' %>
+        <%= f.password_field :password_confirmation, class: "validate #{field_info.dig(:password, :valid)} form-control" %>
       </div>
 
       <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>

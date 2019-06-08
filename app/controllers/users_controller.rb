@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       log_in @user
       redirect_to @user
     else
-      flash.now[:danger] = @user.errors.full_messages.uniq.join("\n")
+      flash.now[:form] = @user.errors.messages
       @user = User.new(user_params)
       render "new"
     end
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       flash[:success] = "Successfully update"
       redirect_to @user
     else
-      flash.now[:danger] = @user.errors.full_messages.uniq.join("\n")
+      flash.now[:form] = @user.errors.messages
       render "edit"
     end
   end
