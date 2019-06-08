@@ -13,8 +13,6 @@
         end
       %>
 
-      <%= field_info.inspect %>
-
       <div class="input-field">
         <%= f.label :name %>
         <%= f.text_field :name, class: "validate #{field_info.dig(:name, :valid)} form-control" %>
