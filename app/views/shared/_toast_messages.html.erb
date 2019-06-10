@@ -5,6 +5,7 @@
         color = case type
           when "notice" then "green"
           when "alert" then "red"
+          else next
         end
       %>
       <% messages.split("\n").each do |message| %>
