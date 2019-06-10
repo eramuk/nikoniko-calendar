@@ -3,8 +3,8 @@
     <% flash.each do |type, messages| %>
       <%
         color = case type
-          when "success" then "green"
-          when "danger" then "red"
+          when "notice" then "green"
+          when "alert" then "red"
         end
       %>
       <% messages.split("\n").each do |message| %>

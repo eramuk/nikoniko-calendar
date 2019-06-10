@@ -9,8 +9,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:notice] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       flash.now[:form] = @user.errors.messages
       @user = User.new(user_params)
@@ -26,7 +27,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "Successfully update"
+      flash[:notice] = "Successfully update"
       redirect_to @user
     else
       flash.now[:form] = @user.errors.messages
@@ -44,7 +45,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     unless logged_in?
-      flash[:danger] = "Please log in."
+      flash[:alert] = "Please log in."
       redirect_to login_url
     end
   end
