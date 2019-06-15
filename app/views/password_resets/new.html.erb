@@ -1,0 +1,15 @@
+<% provide(:title, "Forgot password") %>
+
+<div class="container">
+  <h1>Forgot password</h1>
+
+  <div class="row">
+    <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+      <div class="input-field">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'validate form-control' %>
+      </div>
+      <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
+    <% end %>
+  </div>
+</div>
