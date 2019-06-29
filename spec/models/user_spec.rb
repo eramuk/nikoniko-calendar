@@ -28,12 +28,12 @@ RSpec.describe User, type: :model do
   end
 
   it "passwordが空のときはバリデーションされること" do
-    user.password = user.password_confirmation = " " * User::PASSWORD_MIN_LENGTH
+    user.password = user.password_confirmation = " " * User::Password::MIN_LENGTH
     expect(user).not_to be_valid
   end
 
   it "passwordが最小文字数より大きいこと" do
-    user.password = user.password_confirmation = "a" * (User::PASSWORD_MIN_LENGTH - 1)
+    user.password = user.password_confirmation = "a" * (User::Password::MIN_LENGTH - 1)
     expect(user).not_to be_valid
   end
 end

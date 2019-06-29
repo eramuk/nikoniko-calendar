@@ -1,12 +1,15 @@
 class User < ApplicationRecord
-  PASSWORD_MIN_LENGTH = 8
-
   attr_accessor :remember_token, :activation_token, :reset_token
+
+  module Password
+    MIN_LENGTH = 8
+  end
+
   before_create :create_activation_digest
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password, presence: true, length: { minimum: PASSWORD_MIN_LENGTH }, allow_nil: true
+  validates :password, presence: true, length: { minimum: Password::MIN_LENGTH }, allow_nil: true
   has_secure_password
 
   def User.digest(string)
