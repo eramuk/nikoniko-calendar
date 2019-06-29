@@ -5,6 +5,8 @@ class User < ApplicationRecord
     MIN_LENGTH = 8
   end
 
+  has_many :calendar, dependent: :destroy
+
   before_create :create_activation_digest
 
   validates :name, presence: true
