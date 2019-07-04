@@ -1,1 +1,8 @@
-<%= @user.name %>, <%= @user.email %>
+<%= month_calendar(attribute: :date, events: @calendars) do |date, calendar| %>
+  <%= date.day %>
+  <% calendar.each do |c| %>
+    <div>
+      <%= c.mood %>
+    </div>
+  <% end %>
+<% end %>

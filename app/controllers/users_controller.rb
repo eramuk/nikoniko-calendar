@@ -20,6 +20,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
+    @calendars = @user.calendar.where(date: 2.week.ago..Time.current)
   end
 
   def edit
