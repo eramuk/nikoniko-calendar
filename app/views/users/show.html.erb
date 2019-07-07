@@ -1,8 +1,8 @@
-<%= month_calendar(attribute: :date, events: @calendars) do |date, calendar| %>
+<%= week_calendar(attribute: :date, events: @moods) do |date, mood| %>
   <%= date.day %>
-  <% calendar.each do |c| %>
+  <% mood.each do |m| %>
     <div>
-      <%= c.mood %>
+      <%= m.score %>
     </div>
   <% end %>
 <% end %>

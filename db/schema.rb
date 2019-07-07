@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_28_142820) do
+ActiveRecord::Schema.define(version: 2019_07_07_125138) do
 
-  create_table "calendars", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "moods", force: :cascade do |t|
+    t.integer "user_id"
     t.date "date"
-    t.integer "mood"
-    t.index ["user_id", "date"], name: "index_calendars_on_user_id_and_date", unique: true
+    t.integer "score"
+    t.index ["user_id", "date"], name: "index_moods_on_user_id_and_date", unique: true
   end
 
   create_table "users", force: :cascade do |t|

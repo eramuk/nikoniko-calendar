@@ -5,7 +5,7 @@ class User < ApplicationRecord
     MIN_LENGTH = 8
   end
 
-  has_many :calendar, dependent: :destroy
+  has_many :mood, dependent: :destroy
 
   before_create :create_activation_digest
 

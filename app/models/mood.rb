@@ -1,5 +1,5 @@
-class Calendar < ApplicationRecord
-  module Mood
+class Mood < ApplicationRecord
+  module Score
     GOOD = 1
     NORMAL = 2
     BAD = 3
@@ -9,5 +9,5 @@ class Calendar < ApplicationRecord
 
   validates :user_id, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
-  validates :mood, presence: true, inclusion: { in: Mood::GOOD..Mood::BAD }
+  validates :score, presence: true, inclusion: { in: Score::GOOD..Score::BAD }
 end
