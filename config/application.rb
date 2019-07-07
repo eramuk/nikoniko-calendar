@@ -17,5 +17,6 @@ module NikonikoCalendar
     # the framework and any gems in your application.
 
     config.action_view.field_error_proc = proc { |html_tag, instance| html_tag }
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

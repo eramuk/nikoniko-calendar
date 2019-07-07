@@ -62,6 +62,26 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  def calendar
+    days = Calendar::week(2)
+    moods = self.mood.where(date: (2.week.ago + 1.day)..Time.current)
+
+    days.each do |day|
+      moods.each_with_index do |mood, i|
+        if mood.date == day["date"]
+          day["moods"] ||= []
+          day["moods"].push(mood.attributes)
+          break
+        end
+        if i == moods.size - 1
+          day["moods"] = []
+        end
+      end
+    end
+
+    days
+  end
+
   private
 
   def create_activation_digest
