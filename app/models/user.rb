@@ -63,7 +63,7 @@ class User < ApplicationRecord
   end
 
   def calendar
-    recent_moods = Mood.recent_week(2).joins(:user)
+    recent_moods = moods.recent_week(2)
 
     moods = []
     Calendar::week(2).each do |day|
@@ -76,7 +76,7 @@ class User < ApplicationRecord
       end
     end
 
-    {user_name: self.name, moods: moods}
+    [{user_name: self.name, moods: moods}]
   end
 
   private
