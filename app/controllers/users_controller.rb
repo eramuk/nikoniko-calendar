@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @moods = @user.mood.where(date: 2.week.ago..Time.current)
+    @moods = @user.moods.recent_week(2)
   end
 
   def edit
