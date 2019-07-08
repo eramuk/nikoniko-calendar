@@ -10,4 +10,6 @@ class Mood < ApplicationRecord
   validates :user_id, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
   validates :score, presence: true, inclusion: { in: Score::GOOD..Score::BAD }
+
+  scope :recent_week, -> (num) { where(date: (num.week.ago + 1.day)..Time.current) }
 end

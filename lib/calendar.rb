@@ -6,8 +6,8 @@ class Calendar
 
     (start_day..end_day).map do |date|
       {
-        "date" => date.to_date,
-        "weekday" => weekdays[date.wday]
+        date: date.to_date,
+        weekday: weekdays[date.wday]
       }
     end
   end

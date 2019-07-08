@@ -5,7 +5,7 @@ class User < ApplicationRecord
     MIN_LENGTH = 8
   end
 
-  has_many :mood, dependent: :destroy
+  has_many :moods, dependent: :destroy
 
   before_create :create_activation_digest
 
@@ -63,23 +63,20 @@ class User < ApplicationRecord
   end
 
   def calendar
-    days = Calendar::week(2)
-    moods = self.mood.where(date: (2.week.ago + 1.day)..Time.current)
+    recent_moods = Mood.recent_week(2).joins(:user)
 
-    days.each do |day|
-      moods.each_with_index do |mood, i|
-        if mood.date == day["date"]
-          day["moods"] ||= []
-          day["moods"].push(mood.attributes)
+    moods = []
+    Calendar::week(2).each do |day|
+      recent_moods.each do |mood|
+        if mood.date == day[:date]
+          moods.push(mood.attributes.symbolize_keys.slice(:date, :score))
           break
         end
-        if i == moods.size - 1
-          day["moods"] = []
-        end
+        moods.push({date: day[:date], score: nil})
       end
     end
 
-    days
+    {user_name: self.name, moods: moods}
   end
 
   private
