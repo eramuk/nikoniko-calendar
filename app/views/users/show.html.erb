@@ -1,8 +1,24 @@
-<%= week_calendar(attribute: :date, events: @moods) do |date, mood| %>
-  <%= date.day %>
-  <% mood.each do |m| %>
-    <div>
-      <%= m.score %>
-    </div>
-  <% end %>
-<% end %>
+<% provide(:title, 'Your mood') %>
+
+<div class="container">
+  <div class="row">
+    <table>
+      <tbody>
+        <tr>
+          <th></th>
+          <% @calendar_head.each do |head| %>
+            <th><%= head.day %></th>
+          <% end %>
+        </tr>
+        <tr>
+          <% @calendars.each do |calendar| %>
+            <td><%= calendar[:user_name] %></td>
+            <% calendar[:calendar].each do |day| %>
+              <td><%= day[:score] %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

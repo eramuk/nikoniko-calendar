@@ -62,21 +62,21 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def calendar
+  def calendars
     recent_moods = moods.recent_week(2)
 
-    moods = []
-    Calendar::week(2).each do |day|
+    calendar = Calendar::week(2)
+    calendar.each do |day|
       recent_moods.each do |mood|
         if mood.date == day[:date]
-          moods.push(mood.attributes.symbolize_keys.slice(:date, :score))
-          break
+          h = mood.attributes.symbolize_keys
+          day[:date] = h[:date]
+          day[:score] = h[:score]
         end
-        moods.push({date: day[:date], score: nil})
       end
     end
 
-    [{user_name: self.name, moods: moods}]
+    [{user_name: self.name, calendar: calendar}]
   end
 
   private

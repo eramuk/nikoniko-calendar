@@ -21,7 +21,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @moods = @user.moods.recent_week(2)
+    @calendars = @user.calendars
+    @calendar_head = @calendars.first[:calendar].map{|x| x[:date]}
+    render "show"
   end
 
   def edit
