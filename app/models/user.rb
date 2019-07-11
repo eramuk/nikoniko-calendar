@@ -64,8 +64,8 @@ class User < ApplicationRecord
 
   def calendars
     recent_moods = moods.recent_week(2)
-
     calendar = Calendar::week(2)
+
     calendar.each do |day|
       recent_moods.each do |mood|
         if mood.date == day[:date]
