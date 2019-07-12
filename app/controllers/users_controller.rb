@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @calendars = @user.calendars
-    @calendar_head = @calendars.first[:calendar].map{|x| x[:date]}
+    @calendar_dates = @calendars.first[:calendar].map{|x| x[:date]}
     render "show"
   end
 
