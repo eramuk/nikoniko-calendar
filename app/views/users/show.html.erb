@@ -4,20 +4,12 @@
   <div class="row">
     <div class="col s4 offset-s4 " style="display:inline-flex">
       <p>Today's mood?</p>
-      <%= form_for(:mood, url: moods_path) do |f| %>
-        <%= f.hidden_field :date, :value => @calendar_dates.last %>
-        <%= f.hidden_field :score, :value => Mood::Score::GOOD %>
-        <%= image_submit_tag "mood_good.png", class: "mood-img" %>
-      <% end %>
-      <%= form_for(:mood, url: moods_path) do |f| %>
-        <%= f.hidden_field :date, :value => @calendar_dates.last %>
-        <%= f.hidden_field :score, :value => Mood::Score::NORMAL %>
-        <%= image_submit_tag "mood_normal.png", class: "mood-img" %>
-      <% end %>
-      <%= form_for(:mood, url: moods_path) do |f| %>
-        <%= f.hidden_field :date, :value => @calendar_dates.last %>
-        <%= f.hidden_field :score, :value => Mood::Score::BAD %>
-        <%= image_submit_tag "mood_bad.png", class: "mood-img" %>
+      <% Mood::Score::list.each do |mood_score| %>
+        <%= form_for(:mood, url: moods_path) do |f| %>
+          <%= f.hidden_field :date, :value => @calendar_dates.last %>
+          <%= f.hidden_field :score, :value => mood_score %>
+          <%= image_submit_tag Mood::Score::image_path(mood_score), class: "mood-img" %>
+        <% end %>
       <% end %>
     </div>
   </div>
