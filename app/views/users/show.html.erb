@@ -5,7 +5,7 @@
     <div class="col s4 offset-s4 " style="display:inline-flex">
       <p>Today's mood?</p>
       <% Mood::Score::list.each do |mood_score| %>
-        <%= form_for(:mood, url: moods_path) do |f| %>
+        <%= form_with(model: @calendars.find{|x| x[:user_name] == current_user.name}[:calendar].last, local: true) do |f| %>
           <%= f.hidden_field :date, :value => @calendar_dates.last %>
           <%= f.hidden_field :score, :value => mood_score %>
           <%= image_submit_tag Mood::Score::image_path(mood_score), class: "mood-img" %>
