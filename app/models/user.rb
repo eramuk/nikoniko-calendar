@@ -67,16 +67,19 @@ class User < ApplicationRecord
     calendar = Calendar::week(2)
 
     calendar.each do |day|
+      match = false
       recent_moods.each do |mood|
         if mood.date == day[:date]
-          h = mood.attributes.symbolize_keys
-          day[:date] = h[:date]
-          day[:score] = h[:score]
+          match = true
+          break
         end
+      end
+      unless match
+        recent_moods += [moods.build(date: day[:date])]
       end
     end
 
-    [{user_name: self.name, calendar: calendar}]
+    [{user_name: self.name, calendar: recent_moods.sort_by{|x| x[:date]}}]
   end
 
   private
