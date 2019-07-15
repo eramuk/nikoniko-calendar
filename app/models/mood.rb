@@ -19,5 +19,6 @@ class Mood < ApplicationRecord
   validates :date, presence: true
   validates :score, presence: true, inclusion: { in: Score::list }
 
+  scope :today, -> { where(date: Time.current) }
   scope :recent_week, -> (num) { where(date: (num.week.ago + 1.day)..Time.current) }
 end

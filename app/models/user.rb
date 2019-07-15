@@ -82,6 +82,14 @@ class User < ApplicationRecord
     [{user_name: self.name, calendar: recent_moods.sort_by{|x| x[:date]}}]
   end
 
+  def today_mood
+    today_mood = moods.today
+    if today_mood.blank?
+      today_mood = moods.build(date: Time.current)
+    end
+    today_mood.first
+  end
+
   private
 
   def create_activation_digest
