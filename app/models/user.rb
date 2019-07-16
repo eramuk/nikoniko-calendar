@@ -84,10 +84,7 @@ class User < ApplicationRecord
 
   def today_mood
     today_mood = moods.today
-    if today_mood.blank?
-      today_mood = moods.build(date: Time.current)
-    end
-    today_mood.first
+    today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
   end
 
   private
