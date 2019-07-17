@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_124940) do
+ActiveRecord::Schema.define(version: 2019_07_17_131146) do
 
   create_table "moods", force: :cascade do |t|
     t.bigint "user_id"
@@ -20,11 +20,10 @@ ActiveRecord::Schema.define(version: 2019_07_17_124940) do
   end
 
   create_table "teams", force: :cascade do |t|
-    t.bigint "user_id"
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "name"], name: "index_teams_on_user_id_and_name", unique: true
+    t.index ["name"], name: "index_teams_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
