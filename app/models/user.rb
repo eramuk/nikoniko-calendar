@@ -6,6 +6,8 @@ class User < ApplicationRecord
   end
 
   has_many :moods, dependent: :destroy
+  has_many :user_teams
+  has_many :teams, through: :user_teams
 
   before_create :create_activation_digest
 
