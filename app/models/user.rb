@@ -64,9 +64,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def calendars
-    recent_moods = moods.recent_week(2)
-    calendar = Calendar::week(2)
+  def calendar(user: self, week: 2)
+    recent_moods = user.moods.recent_week(week)
+    calendar = Calendar::week(week)
 
     calendar.each do |day|
       match = false
@@ -81,7 +81,22 @@ class User < ApplicationRecord
       end
     end
 
-    [{user_name: self.name, calendar: recent_moods.sort_by{|x| x[:date]}}]
+    recent_moods.sort_by{|x| x[:date]}
+  end
+
+  def team_calendar
+    calendars = {}
+    teams.order(:name).each do |team|
+      calendars[team.name] = {}
+      team.users.order(:name).each do |user|
+        calendars[team.name][user.name] = calendar(user: user)
+      end
+    end
+    calendars
+  end
+
+  def has_team?
+    !teams.blank?
   end
 
   def today_mood

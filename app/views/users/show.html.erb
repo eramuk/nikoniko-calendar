@@ -17,16 +17,20 @@
     <table>
       <tbody>
         <tr>
-          <th></th>
-          <% @calendar_dates.each do |date| %>
-            <th><%= date.day %></th>
-          <% end %>
-        </tr>
-        <tr>
-          <% @calendars.each do |calendar| %>
-            <td><%= calendar[:user_name] %></td>
-            <% calendar[:calendar].each do |day| %>
-              <td><%= day[:score] %></td>
+          <% @calendar.each do |team_name, users| %>
+            <tr>
+              <th><%= team_name %></th>
+              <% @calendar_dates.each do |date| %>
+                <th><%= date.day %></th>
+              <% end %>
+            </tr>
+            <% users.each do |user, calendar| %>
+            <tr>
+              <td><%= user %></td>
+              <% calendar.each do |day| %>
+                <td><%= day[:score] %></td>
+              <% end %>
+            </tr>
             <% end %>
           <% end %>
         </tr>
