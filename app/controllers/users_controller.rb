@@ -13,8 +13,6 @@ class UsersController < ApplicationController
       flash[:notice] = "Please check your email to activate your account."
       redirect_to root_url
     else
-      flash.now[:form] = @user.errors.messages
-      @user = User.new(user_params)
       render "new"
     end
   end
