@@ -4,6 +4,7 @@
     <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
     <% if logged_in? %>
+      <li><%= link_to "Teams", teams_path %></li>
       <li><%= link_to "Profile", edit_user_path(current_user) %></li>
       <li><%= link_to "Logout", logout_path, method: :delete %></li>
     <% else %>
@@ -16,6 +17,7 @@
 
 <ul class="sidenav" id="mobile-nav">
 <% if logged_in? %>
+  <li><%= link_to "Teams", teams_path %></li>
   <li><%= link_to "Profile", edit_user_path(current_user) %></li>
   <li><%= link_to "Logout", logout_path, method: :delete %></li>
 <% else %>
@@ -23,5 +25,3 @@
   <li><%= link_to "Sign up", signup_path %></li>
 <% end %>
 </ul>
-
-
