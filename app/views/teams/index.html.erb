@@ -5,11 +5,11 @@
     <h2>Index Team</h2>
     <table>
       <tbody>
-        <tr>
-          <% @teams.each do |team| %>
+        <% @teams.each do |team| %>
+          <tr>
             <td><%= team.name %></td>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
