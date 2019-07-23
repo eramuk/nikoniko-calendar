@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @calendar = @user.has_team? ? @user.team_calendar : { "" => { @user.name => @user.calendar} }
+    @calendar = @user.team_calendar
     @calendar_dates = Calendar::week(2).map {|x| x[:date]}
     render "show"
   end

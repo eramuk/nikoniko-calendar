@@ -85,14 +85,19 @@ class User < ApplicationRecord
   end
 
   def team_calendar
-    calendars = {}
+    unless has_team?
+      return {"" => {name => calendar()}}
+    end
+
+    calendar = {}
     teams.order(:name).each do |team|
-      calendars[team.name] = {}
+      calendar[team.name] = {}
       team.users.order(:name).each do |user|
-        calendars[team.name][user.name] = calendar(user: user)
+        calendar[team.name][user.name] = calendar(user: user)
       end
     end
-    calendars
+
+    calendar
   end
 
   def has_team?
