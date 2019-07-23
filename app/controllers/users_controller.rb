@@ -32,7 +32,6 @@ class UsersController < ApplicationController
       flash[:notice] = "Successfully update"
       redirect_to @user
     else
-      flash.now[:form] = @user.errors.messages
       render "edit"
     end
   end
