@@ -10,7 +10,7 @@ class MoodsController < ApplicationController
   def update
     @mood = current_user.moods.find(params[:id])
     flash[:alert] = "Faild to post mood" unless @mood.update(score: mood_params[:score])
-    redirect_to "/users/1"
+    redirect_to controller: "users", action: "show"
   end
 
   private
