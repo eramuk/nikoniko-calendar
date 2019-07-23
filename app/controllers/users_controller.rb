@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @today_mood = @user.today_mood
     @calendar = @user.team_calendar
     @calendar_dates = Calendar::week(2).map {|x| x[:date]}
     render "show"
