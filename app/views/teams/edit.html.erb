@@ -1,0 +1,17 @@
+<% provide(:title, "Edit Team") %>
+
+<div class="container">
+  <div class="row">
+    <h2>Edit Team</h2>
+    <%= form_with(model: @team) do |f| %>
+      <div class="input-field">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "validate #{form_validate(@team, :name)} form-control" %>
+        <% if message = form_error(@team, :name) %>
+          <span class="helper-text" data-error="<%= message %>"></span>
+        <% end %>
+      </div>
+      <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
+    <% end %>
+  </div>
+</div>

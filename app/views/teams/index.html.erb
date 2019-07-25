@@ -8,6 +8,11 @@
         <% @teams.each do |team| %>
           <tr>
             <td><%= team.name %></td>
+            <td>
+              <%= link_to "Edit", edit_team_path(team.id) %>
+              Invite
+              <%= link_to "Delete", team_path(team.id) %>
+            </td>
           </tr>
         <% end %>
       </tbody>
