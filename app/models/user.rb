@@ -77,7 +77,7 @@ class User < ApplicationRecord
         end
       end
       unless match
-        recent_moods += [moods.build(date: day[:date])]
+        recent_moods += [user.moods.build(date: day[:date])]
       end
     end
 
@@ -91,9 +91,9 @@ class User < ApplicationRecord
 
     calendar = {}
     teams.order(:name).each do |team|
-      calendar[team.name] = {}
+      calendar[team.name.to_sym] = []
       team.users.order(:name).each do |user|
-        calendar[team.name][user.name] = calendar(user: user)
+        calendar[team.name.to_sym].push({user.name.to_sym => calendar(user: user)})
       end
     end
 
