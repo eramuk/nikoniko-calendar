@@ -1,0 +1,2 @@
+class TeamInvitation < ApplicationRecord
+end
