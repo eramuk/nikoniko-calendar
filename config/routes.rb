@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :moods,               only: [:create, :update]
   resources :teams
+  resources :team_invitations
 end

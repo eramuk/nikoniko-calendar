@@ -3,5 +3,15 @@
 <div class="container">
   <div class="row">
     <h2>Invite user to <%= @team.name %></h2>
+    <%= form_with(model: @team_invitation) do |f| %>
+      <div class="input-field">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "validate #{form_validate(@team_invitation, :email)} form-control" %>
+        <% if message = form_error(@team_invitation, :email) %>
+          <span class="helper-text" data-error="<%= message %>"></span>
+        <% end %>
+      </div>
+      <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
+    <% end %>
   </div>
 </div>
