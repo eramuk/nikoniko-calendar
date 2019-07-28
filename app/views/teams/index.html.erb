@@ -11,7 +11,7 @@
             <td>
               <%= link_to "Edit", edit_team_path(team.id) %>
               Invite
-              <%= link_to "Delete", team_path(team.id) %>
+              <%= link_to "Delete", team_path(team.id), method: :delete, data: {confirm: "Are you sure you want to delete team #{team.name}?"} %>
             </td>
           </tr>
         <% end %>
