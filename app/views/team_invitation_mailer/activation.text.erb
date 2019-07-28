@@ -1,0 +1,5 @@
+Hi <%= @team_invitation.recipient.name %>,
+
+<%= @team_invitation.sender.name %> has invited you to join the <%= @team_invitation.team.name %>.
+
+<%= edit_team_invitation_url(@team_invitation.activation_token) %>
