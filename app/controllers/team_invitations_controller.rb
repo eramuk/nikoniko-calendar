@@ -17,6 +17,7 @@ class TeamInvitationsController < ApplicationController
     @recipient_user = User.find_by(email: team_invitation_params[:email])
     unless @recipient_user
       @team_invitation = TeamInvitation.new
+      @team_invitation.email = team_invitation_params[:email]
       @team_invitation.errors.add(:email, "not found")
       render "new" and return
     end
