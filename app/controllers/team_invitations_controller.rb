@@ -29,7 +29,7 @@ class TeamInvitationsController < ApplicationController
       flash[:alert] = "Failed"
     end
 
-    redirect_to action: "new", team_id: @team.id
+    redirect_to action: "new", team_invitation: {team_id: @team.id}
   end
 
   private
