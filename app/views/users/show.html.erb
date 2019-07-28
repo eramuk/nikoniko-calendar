@@ -6,8 +6,8 @@
       <p>Today's mood?</p>
       <% Mood::Score::list.each do |mood_score| %>
         <%= form_with(model: @today_mood, local: true) do |f| %>
-          <%= f.hidden_field :date, :value => @calendar_dates.last %>
-          <%= f.hidden_field :score, :value => mood_score %>
+          <%= f.hidden_field :date, value: @calendar_dates.last %>
+          <%= f.hidden_field :score, value: mood_score %>
           <%= image_submit_tag Mood::Score::image_path(mood_score), class: "mood-img" %>
         <% end %>
       <% end %>
