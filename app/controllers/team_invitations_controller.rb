@@ -1,0 +1,2 @@
+class TeamInvitationsController < ApplicationController
+end
