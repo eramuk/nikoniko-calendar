@@ -1,10 +1,14 @@
 class TeamInvitation < ApplicationRecord
   attr_accessor :activation_token
 
+  belongs_to :team
+  belongs_to :sender, class_name: "User"
+  belongs_to :recipient, class_name: "User"
+
   before_create :create_activation_digest
   validates :team_id, presence: true
-  validates :sender_user_id, presence: true
-  validates :recipient_user_id, presence: true
+  validates :sender_id, presence: true
+  validates :recipient_id, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def TeamInvitation.digest(string)

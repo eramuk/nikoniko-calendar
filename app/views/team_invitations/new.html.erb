@@ -7,7 +7,6 @@
       <div class="input-field">
         <%= f.label :email %>
         <%= f.hidden_field :team_id, value: @team.id %>
-        <%= f.hidden_field :sender_user_id, value: current_user.id %>
         <%= f.email_field :email, class: "validate #{form_validate(@team_invitation, :email)} form-control" %>
         <% if message = form_error(@team_invitation, :email) %>
           <span class="helper-text" data-error="<%= message %>"></span>
