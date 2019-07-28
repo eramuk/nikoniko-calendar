@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_132428) do
+ActiveRecord::Schema.define(version: 2019_07_28_035022) do
 
   create_table "moods", force: :cascade do |t|
     t.bigint "user_id"
     t.date "date"
     t.integer "score"
     t.index ["user_id", "date"], name: "index_moods_on_user_id_and_date", unique: true
+  end
+
+  create_table "team_invitations", force: :cascade do |t|
+    t.bigint "team_id"
+    t.bigint "sender_user_id"
+    t.bigint "recipient_user_id"
+    t.string "email"
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "teams", force: :cascade do |t|
