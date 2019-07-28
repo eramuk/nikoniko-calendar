@@ -1,0 +1,2 @@
+class TeamInvitationMailer < ApplicationMailer
+end
