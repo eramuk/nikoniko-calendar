@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
   def team_calendar
     unless has_team?
-      return {"" => {name => calendar()}}
+      return {"" => [{name => calendar()}]}
     end
 
     calendar = {}
