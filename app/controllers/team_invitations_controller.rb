@@ -1,13 +1,15 @@
 class TeamInvitationsController < ApplicationController
   before_action :logged_in_user
-  before_action :get_team, only: ["new", "create"]
 
   def new
     @team_invitation = TeamInvitation.new
+    @team = current_user.teams.find(params[:team_id])
     render "new"
   end
 
   def create
+    @team = current_user.teams.find(team_invitation_params[:team_id])
+
     if team_invitation_params[:email].empty?
       @team_invitation = TeamInvitation.new
       @team_invitation.errors.add(:email, :blank)
@@ -32,7 +34,7 @@ class TeamInvitationsController < ApplicationController
       flash[:alert] = "Failed to invitation"
     end
 
-    redirect_to action: "new", team_invitation: {team_id: @team.id}
+    redirect_to action: "new", team_id: @team.id
   end
 
   def edit
@@ -59,9 +61,5 @@ class TeamInvitationsController < ApplicationController
 
   def team_invitation_params
     params.require(:team_invitation).permit(:team_id, :email)
-  end
-
-  def get_team
-    @team = current_user.teams.find(team_invitation_params[:team_id])
   end
 end
