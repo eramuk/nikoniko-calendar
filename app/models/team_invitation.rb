@@ -21,6 +21,11 @@ class TeamInvitation < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
+  def authenticated?(token)
+    return false if activation_digest.nil?
+    BCrypt::Password.new(activation_digest).is_password?(token)
+  end
+
   private
 
   def create_activation_digest

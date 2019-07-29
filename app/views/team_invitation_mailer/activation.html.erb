@@ -4,4 +4,4 @@
 <%= @team_invitation.sender.name %> has invited you to join the <%= @team_invitation.team.name %>.
 </p>
 
-<%= link_to "Join #{@team_invitation.team.name}", edit_team_invitation_url(@team_invitation.activation_token) %>
+<%= link_to "Join #{@team_invitation.team.name}", edit_team_invitation_url(@team_invitation.id), token: @team_invitation.activation_token %>
