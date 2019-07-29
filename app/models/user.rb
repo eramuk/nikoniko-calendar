@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_many :moods, dependent: :destroy
   has_many :user_teams
   has_many :teams, through: :user_teams
-  has_many :invitation_senders, class_name: "TeamInvitation", foreign_key: "sender_user_id"
-  has_many :invitation_recipients, class_name: "TeamInvitation", foreign_key: "recipient_user_id"
+  has_many :team_invitation_senders, class_name: "TeamInvitation", foreign_key: "sender_id"
+  has_many :team_invitation_recipients, class_name: "TeamInvitation", foreign_key: "recipient_id"
 
   before_create :create_activation_digest
   validates :name, presence: true
