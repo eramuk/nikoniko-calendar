@@ -14,8 +14,8 @@ class TeamInvitationsController < ApplicationController
       render "new" and return
     end
 
-    @recipient = User.find_by(email: team_invitation_params[:email], activated: true)
-    unless @recipient
+    recipient = User.find_by(email: team_invitation_params[:email], activated: true)
+    unless recipient
       @team_invitation = TeamInvitation.new
       @team_invitation.email = team_invitation_params[:email]
       @team_invitation.errors.add(:email, "not found")
@@ -24,7 +24,7 @@ class TeamInvitationsController < ApplicationController
 
     @team_invitation = TeamInvitation.new(team_invitation_params)
     @team_invitation.sender_id = current_user.id
-    @team_invitation.recipient_id = @recipient.id
+    @team_invitation.recipient_id = recipient.id
     if @team_invitation.save
       flash[:notice] = "Email sent with invitations"
       TeamInvitationMailer.activation(@team_invitation).deliver_now
