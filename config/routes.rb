@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   resources :moods,               only: [:create, :update]
   resources :teams
   resources :team_invitations
-  resources :user_teams           only: [:update]
+  resources :user_teams,          only: [:destroy]
 end
