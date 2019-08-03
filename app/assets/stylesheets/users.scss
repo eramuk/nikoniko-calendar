@@ -1,3 +1,44 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.mood-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+
+  .message {
+    margin: 5px 20px;
+    font-size: 32px;
+  }
+
+  .emoji {
+    margin: 5px;
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.calendar {
+  width: 100%;
+  word-wrap: break-word;
+
+  .name {
+    width: 16%;
+    padding: 10px 5px;
+  }
+
+  .date {
+    width: 6%;
+    padding: 10px 5px;
+    text-align: center;
+
+    > img {
+      display: block;
+      margin: 0 auto;
+      width: 26px;
+      height: 26px;
+    }
+  }
+}
