@@ -42,7 +42,7 @@ class TeamInvitationsController < ApplicationController
     if team_invitation&.recipient.id == current_user.id && team_invitation.authenticated?(params[:token])
       begin
         ActiveRecord::Base.transaction do
-          team_invitation.recipient.join_team(team_invitation.team)
+          team_invitation.team.join(current_user.id)
           team_invitation.update(activated: true)
         end
         flash[:notice] = "Join #{team_invitation.team.name}!"

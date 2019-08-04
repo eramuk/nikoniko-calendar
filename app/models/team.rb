@@ -5,6 +5,10 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 16 }, allow_nil: true
 
+  def join(user_id)
+    self.user_teams.create(user_id: user_id)
+  end
+
   def leave(user_id)
     self.user_teams.find_by(user_id: user_id).destroy
   end

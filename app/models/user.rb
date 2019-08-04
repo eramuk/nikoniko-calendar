@@ -110,10 +110,6 @@ class User < ApplicationRecord
     today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
   end
 
-  def join_team(team)
-    user_teams.create(team_id: team.id)
-  end
-
   private
 
   def create_activation_digest
