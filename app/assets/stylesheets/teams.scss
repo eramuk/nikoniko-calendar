@@ -1,3 +1,27 @@
 // Place all the styles related to the Teams controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.index {
+  display: block;
+  width: 100%;
+  word-wrap: break-word;
+  border: 1px;
+  border-style: solid;
+  border-color: #e0e0e0;
+  border-radius: 6px;
+
+  .name {
+    display: inline-block;
+    width: 40%;
+    padding: 10px 5px;
+    margin-left: 5px;
+  }
+
+  .operation {
+    display: inline-block;
+    width: 55%;
+    padding: 10px 5px;
+    text-align: right;
+  }
+}

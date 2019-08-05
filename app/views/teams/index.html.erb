@@ -2,24 +2,32 @@
 
 <div class="container">
   <div class="row">
-    <h2>Index Team</h2>
-    <table>
-      <tbody>
-        <% @teams.each do |team| %>
-          <tr>
-            <td><%= team.name %></td>
-            <td>
+    <div class="col s12">
+      <h2>Index Team</h2>
+    </div>
+  </div>
+  <% @teams.each_with_index do |team, i| %>
+    <% if i.even? %>
+    <div class="row">
+    <% end %>
+      <div class="col s6">
+        <div class="index">
+            <p class="name"><%= team.name %></p>
+            <p class="operation">
               <%= link_to "Edit", edit_team_path(team.id) %>
               <%= link_to "Invite", new_team_invitation_path(team_id: team.id) %>
               <%= link_to "Leave", leave_team_path(team.id), method: :post, data: {confirm: "Are you sure you want to leave #{team.name}?"} %>
               <%= link_to "Delete", team_path(team.id), method: :delete, data: {confirm: "Are you sure you want to delete #{team.name}?"} %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+            </p>
+        </div>
+      </div>
+    <% if !i.even? || i == @teams.size - 1 %>
+    </div>
+    <% end %>
+  <% end %>
   <div class="row">
-    <%= link_to "New Team", new_team_path, class: "btn waves-effect waves-light" %>
+    <div class="col s12">
+      <%= link_to "New Team", new_team_path, class: "btn waves-effect waves-light" %>
+    </div>
   </div>
 </div>
