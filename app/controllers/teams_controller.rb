@@ -42,6 +42,26 @@ class TeamsController < ApplicationController
     redirect_to action: "index"
   end
 
+  def join
+    invitation = TeamInvitation.find_by(id: params[:invitation_id], activated: false)
+    if invitation&.recipient.id == current_user.id && invitation.authenticated?(params[:token])
+      begin
+        ActiveRecord::Base.transaction do
+          invitation.team.join(invitation.recipient.id)
+          invitation.update!(activated: true)
+        end
+        flash[:notice] = "Join #{invitation.team.name}!"
+      rescue
+        flash[:alert] = "Faild to join #{invitation.team.name}"
+      ensure
+        redirect_to current_user
+      end
+    else
+      flash[:alert] = "Invalid activation link"
+      redirect_to root_url
+    end
+  end
+
   def leave
     if @team.leave(current_user.id)
       flash[:notice] = "Successfully leaved"

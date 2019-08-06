@@ -37,26 +37,6 @@ class TeamInvitationsController < ApplicationController
     redirect_to action: "new", team_id: @team.id
   end
 
-  def edit
-    team_invitation = TeamInvitation.find_by(id: params[:id], activated: false)
-    if team_invitation&.recipient.id == current_user.id && team_invitation.authenticated?(params[:token])
-      begin
-        ActiveRecord::Base.transaction do
-          team_invitation.team.join(current_user.id)
-          team_invitation.update(activated: true)
-        end
-        flash[:notice] = "Join #{team_invitation.team.name}!"
-      rescue
-        flash[:alert] = "Faild to join #{team_invitation.team.name}"
-      ensure
-        redirect_to current_user
-      end
-    else
-      flash[:alert] = "Invalid activation link"
-      redirect_to root_url
-    end
-  end
-
   private
 
   def team_invitation_params
