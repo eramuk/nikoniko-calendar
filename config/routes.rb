@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   resources :user_teams,          only: [:destroy]
 
   resources :teams do
-    post 'leave', on: :member
+    post 'join', 'leave', on: :member
   end
 end
