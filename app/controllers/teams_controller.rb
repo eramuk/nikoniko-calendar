@@ -63,7 +63,9 @@ class TeamsController < ApplicationController
   end
 
   def leave
-    if @team.leave(current_user.id)
+    if @team.last_user?
+      flash[:alert] = "You are last user"
+    elsif @team.leave(current_user.id)
       flash[:notice] = "Successfully leaved"
     else
       flash[:alert] = "Failed to leaved"

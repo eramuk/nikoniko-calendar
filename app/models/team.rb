@@ -12,4 +12,8 @@ class Team < ApplicationRecord
   def leave(user_id)
     self.user_teams.find_by(user_id: user_id).destroy
   end
+
+  def last_user?
+    self.users.size == 1
+  end
 end
