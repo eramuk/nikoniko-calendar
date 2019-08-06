@@ -86,12 +86,14 @@ class User < ApplicationRecord
   end
 
   def team_calendar
-    unless has_team?
+    sorted_teams = teams.order(:name)
+
+    if sorted_teams.blank?
       return {"" => [{name => calendar()}]}
     end
 
     calendar = {}
-    teams.order(:name).each do |team|
+    sorted_teams.each do |team|
       calendar[team.name.to_sym] = []
       team.users.order(:name).each do |user|
         calendar[team.name.to_sym].push({user.name.to_sym => calendar(user: user)})
@@ -99,10 +101,6 @@ class User < ApplicationRecord
     end
 
     calendar
-  end
-
-  def has_team?
-    !teams.blank?
   end
 
   def today_mood
