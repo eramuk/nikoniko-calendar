@@ -65,39 +65,33 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def calendar(user: self, week: 2)
-    recent_moods = user.moods.recent_week(week)
-    calendar = Calendar::week(week)
-
-    calendar.each do |day|
+  def fill_calendar(moods)
+    Calendar::week(2).each do |day|
       match = false
-      recent_moods.each do |mood|
+      moods.each do |mood|
         if mood.date == day[:date]
           match = true
           break
         end
       end
       unless match
-        recent_moods += [user.moods.build(date: day[:date])]
+        moods += [self.moods.build(date: day[:date])]
       end
     end
-
-    recent_moods.sort_by{|x| x[:date]}
+    moods.sort_by{|x| x[:date]}
   end
 
-  def team_calendar
-    sorted_teams = teams.order(:name)
-
-    if sorted_teams.blank?
-      return {"" => [{name => calendar()}]}
+  def calendar
+    calendar = {}
+    teams.order(:name).includes([users: :moods]).merge(Mood.recent_week(2)).references(:moods).each do |team|
+      calendar[team.name] = []
+      team.users.each do |user|
+        calendar[team.name].push({user.name.to_sym => fill_calendar(user.moods)})
+      end
     end
 
-    calendar = {}
-    sorted_teams.each do |team|
-      calendar[team.name.to_sym] = []
-      team.users.order(:name).each do |user|
-        calendar[team.name.to_sym].push({user.name.to_sym => calendar(user: user)})
-      end
+    if calendar.empty?
+      return {"" => [{name => fill_calendar(moods.recent_week(2))}]}
     end
 
     calendar
