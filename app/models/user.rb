@@ -83,7 +83,7 @@ class User < ApplicationRecord
 
   def calendar
     calendar = {}
-    teams.order(:name).includes([users: :moods]).merge(Mood.recent_week(2)).references(:moods).each do |team|
+    teams.order(:name).includes([users: :moods]).order("users.name").merge(Mood.recent_week(2)).references(:moods).each do |team|
       calendar[team.name] = []
       team.users.each do |user|
         calendar[team.name].push({user.name.to_sym => fill_calendar(user.moods)})
