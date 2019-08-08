@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   def logged_in_user
     unless logged_in?
       flash[:alert] = "Please log in."
-      redirect_to login_url
+      redirect_params = params[:redirect] ? {redirect_url: request.url} : nil
+      redirect_to login_url(redirect_params)
     end
   end
 end

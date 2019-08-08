@@ -5,6 +5,8 @@
 
   <div class="row">
     <%= form_for(:session, url: login_path) do |f| %>
+      <%= hidden_field_tag :redirect_url, @redirect_url %>
+
       <div class="input-field">
         <%= f.label :email %>
         <%= f.email_field :email, class: 'validate form-control' %>
