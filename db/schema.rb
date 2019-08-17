@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_28_035022) do
+ActiveRecord::Schema.define(version: 2019_08_17_203236) do
 
   create_table "moods", force: :cascade do |t|
     t.bigint "user_id"
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 2019_07_28_035022) do
   create_table "user_teams", force: :cascade do |t|
     t.integer "user_id"
     t.integer "team_id"
-    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role"
     t.index ["team_id"], name: "index_user_teams_on_team_id"
     t.index ["user_id"], name: "index_user_teams_on_user_id"
   end
