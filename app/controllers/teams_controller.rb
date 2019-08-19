@@ -12,24 +12,13 @@ class TeamsController < ApplicationController
   end
 
   def create
-    user_teams = current_user.user_teams.build(role: :owner)
-
-    ActiveRecord::Base.transaction do
-      @team = Team.new(team_params)
-      unless @team.save
-        render "new" and return
-      end
-
-      user_teams.team = @team
-      if user_teams.save
-        flash[:notice] = "Successfully created"
-      else
-        flash[:alert] = "Failed to created"
-        raise ActiveRecord::Rollback
-      end
+    @team = current_user.teams.build(team_params)
+    if current_user.save
+      flash[:notice] = "Successfully created"
+      redirect_to action: "index"
+    else
+      render "new"
     end
-
-    redirect_to action: "index"
   end
 
   def edit
