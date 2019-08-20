@@ -2,17 +2,29 @@
 
 <div class="container">
   <div class="row">
-    <h2>Invite user to <%= @team.name %></h2>
-    <%= form_with(model: @team_invitation) do |f| %>
-      <div class="input-field">
+    <div class="col s12">
+      <h2>Invite user to <%= @team.name %></h2>
+    </div>
+  </div>
+  <%= form_with(model: @team_invitation) do |f| %>
+    <div class=row>
+      <div class="input-field col l6 m12 s12">
         <%= f.label :email %>
-        <%= f.hidden_field :team_id, value: @team.id %>
         <%= f.email_field :email, class: "validate #{form_validate(@team_invitation, :email)} form-control" %>
         <% if message = form_error(@team_invitation, :email) %>
           <span class="helper-text" data-error="<%= message %>"></span>
         <% end %>
       </div>
-      <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
-    <% end %>
-  </div>
+      <div class="input-field col l6 m12 s12">
+        <%= f.select :role, UserTeam.roles.to_a %>
+        <%= f.label :role %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <%= f.hidden_field :team_id, value: @team.id %>
+        <%= button_tag 'SUBMIT', class: 'btn waves-effect waves-light', type: 'button', onclick: 'submit();' %>
+      </div>
+    </div>
+  <% end %>
 </div>
