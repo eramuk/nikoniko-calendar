@@ -10,4 +10,10 @@ class UserTeam < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :team_id }
   validates :role, inclusion: { in: roles }
+
+  before_validation do
+    if self.team && self.team.users.empty?
+      self.role = :owner
+    end
+  end
 end
