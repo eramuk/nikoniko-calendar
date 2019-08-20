@@ -40,6 +40,6 @@ class TeamInvitationsController < ApplicationController
   private
 
   def team_invitation_params
-    params.require(:team_invitation).permit(:team_id, :email)
+    params.require(:team_invitation).permit(:team_id, :email, :role)
   end
 end
