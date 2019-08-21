@@ -2,4 +2,4 @@ Hi <%= @team_invitation.recipient.name %>,
 
 <%= @team_invitation.sender.name %> has invited you to join the <%= @team_invitation.team.name %>.
 
-<%= join_teams_url(invitation_id: @team_invitation.id, token: @team_invitation.activation_token, redirect: true) %>
+<%= join_teams_url(token: @team_invitation.token, redirect: true) %>
