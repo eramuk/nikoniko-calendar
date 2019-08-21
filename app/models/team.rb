@@ -5,8 +5,8 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 16 }, allow_nil: true
 
-  def join(user_id)
-    self.user_teams.create(user_id: user_id)
+  def join(user_id, role)
+    self.user_teams.create(user_id: user_id, role: role)
   end
 
   def leave(user_id)
