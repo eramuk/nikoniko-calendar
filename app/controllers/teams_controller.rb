@@ -46,7 +46,7 @@ class TeamsController < ApplicationController
     invitation = TeamInvitation.find_by(token: params[:token])
     if invitation&.recipient.id == current_user.id
       begin
-        ActiveRecord::Base.transaction do
+        invitation.team.with_lock do
           invitation.team.join(invitation.recipient.id, invitation.role)
           invitation.destroy
         end
