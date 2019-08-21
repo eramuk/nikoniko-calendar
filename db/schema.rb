@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_153140) do
+ActiveRecord::Schema.define(version: 2019_08_21_145520) do
 
   create_table "moods", force: :cascade do |t|
     t.bigint "user_id"
@@ -20,15 +20,15 @@ ActiveRecord::Schema.define(version: 2019_08_20_153140) do
   end
 
   create_table "team_invitations", force: :cascade do |t|
-    t.bigint "team_id"
-    t.bigint "sender_id"
-    t.bigint "recipient_id"
+    t.integer "team_id"
+    t.integer "sender_id"
+    t.integer "recipient_id"
     t.string "email"
-    t.string "activation_digest"
-    t.boolean "activated", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role"
+    t.string "token"
+    t.index ["token"], name: "index_team_invitations_on_token", unique: true
   end
 
   create_table "teams", force: :cascade do |t|
