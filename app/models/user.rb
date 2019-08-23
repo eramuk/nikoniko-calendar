@@ -6,6 +6,7 @@ class User < ApplicationRecord
   end
 
   has_many :moods, dependent: :destroy
+  has_many :recent_moods, -> { Mood.recent_week(2) }, class_name: "Mood", dependent: :destroy
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
   has_many :team_invitation_senders, class_name: "TeamInvitation", foreign_key: "sender_id"
@@ -83,10 +84,11 @@ class User < ApplicationRecord
 
   def calendar
     calendar = {}
-    teams.order(:name).includes([users: :moods]).order("users.name").merge(Mood.recent_week(2)).each do |team|
+
+    teams = self.teams.order(:name).preload([users: :recent_moods]).each do |team|
       calendar[team.name] = []
       team.users.each do |user|
-        calendar[team.name].push({user.name.to_sym => fill_calendar(user.moods)})
+        calendar[team.name].push({user.name.to_sym => fill_calendar(user.recent_moods)})
       end
     end
 
