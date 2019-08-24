@@ -1,24 +1,20 @@
 class Mood < ApplicationRecord
-  module Score
-    GOOD = 1
-    NORMAL = 2
-    BAD = 3
-
-    def self.list
-      [GOOD, NORMAL, BAD]
-    end
-
-    def self.image_path(score)
-      ["mood_good.png", "mood_normal.png", "mood_bad.png"][score - 1]
-    end
-  end
-
   belongs_to :user
+
+  enum score: {
+    good: 1,
+    normal: 2,
+    bad: 3
+  }
 
   validates :user_id, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
-  validates :score, presence: true, inclusion: { in: Score::list }
+  validates :score, presence: true, inclusion: { in: scores }
 
   scope :today, -> { where(date: Time.current) }
   scope :recent_week, -> (num) { where(date: (num.week.ago + 1.day)..Time.current) }
+
+  def self.image_path(score)
+    "mood_#{score.to_s}.png"
+  end
 end

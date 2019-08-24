@@ -17,7 +17,7 @@ RSpec.describe Mood, type: :model do
   end
 
   it "not to be valid when mood is over" do
-    mood.score = Mood::Score::BAD + 1
+    mood.score = Mood.scores.values.last + 1
     expect(mood).not_to be_valid
   end
 end

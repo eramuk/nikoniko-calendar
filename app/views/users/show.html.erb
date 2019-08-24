@@ -4,11 +4,11 @@
   <div class="row">
     <div class="mood-selector">
       <p class="message">What's up?</p>
-      <% Mood::Score::list.each do |mood_score| %>
+      <% Mood.scores.keys.each do |score| %>
         <%= form_with(model: @today_mood, local: true) do |f| %>
           <%= f.hidden_field :date, value: @calendar_dates.last %>
-          <%= f.hidden_field :score, value: mood_score %>
-          <%= image_submit_tag Mood::Score::image_path(mood_score), class: "emoji" %>
+          <%= f.hidden_field :score, value: score %>
+          <%= image_submit_tag Mood.image_path(score), class: "emoji" %>
         <% end %>
       <% end %>
     </div>
@@ -29,7 +29,7 @@
                 <% user_calendars.each do |user_name, calendar| %>
                   <td class="name"><%= user_name %></td>
                   <% calendar.each do |day| %>
-                    <td class="date"><%= image_tag Mood::Score::image_path(day.score) if day.score %></td>
+                    <td class="date"><%= image_tag Mood.image_path(day.score) if day.score %></td>
                   <% end %>
                 <% end %>
               </tr>
