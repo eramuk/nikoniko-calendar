@@ -34,10 +34,12 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    if @team.destroy
-      flash[:notice] = "Successfully deleted"
-    else
-      flash[:alert] = "Failed to delete"
+    @team.with_lock do
+      if @team.destroy
+        flash[:notice] = "Successfully deleted"
+      else
+        flash[:alert] = "Failed to delete"
+      end
     end
     redirect_to action: "index"
   end
@@ -62,11 +64,16 @@ class TeamsController < ApplicationController
   end
 
   def leave
-    if @team.last_user?
-      flash[:alert] = "You are last user"
-    elsif @team.leave(current_user.id)
-      flash[:notice] = "Successfully leaved"
-    else
+    begin
+      @team.with_lock do
+        if @team.last_owner?
+          flash[:alert] = "You are last user"
+        else
+          @team.leave(current_user.id)
+          flash[:notice] = "Successfully leaved"
+        end
+      end
+    rescue
       flash[:alert] = "Failed to leaved"
     end
     redirect_to action: "index"

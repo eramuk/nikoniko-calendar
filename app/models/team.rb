@@ -16,4 +16,8 @@ class Team < ApplicationRecord
   def last_user?
     self.users.size == 1
   end
+
+  def last_owner?
+    self.users.where(user_teams: {role: :owner}).size == 1
+  end
 end
