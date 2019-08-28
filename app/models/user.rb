@@ -104,6 +104,16 @@ class User < ApplicationRecord
     today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
   end
 
+  def can_edit?(team)
+    role = user_teams.find_by(team_id: team.id)&.role_before_type_cast
+    !!role && role >= UserTeam.roles[:editor]
+  end
+
+  def owner?(team)
+    role = user_teams.find_by(team_id: team.id)&.role_before_type_cast
+    !!role && role == UserTeam.roles[:owner]
+  end
+
   private
 
   def create_activation_digest
