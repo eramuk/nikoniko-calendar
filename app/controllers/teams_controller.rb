@@ -67,7 +67,7 @@ class TeamsController < ApplicationController
     begin
       @team.with_lock do
         if @team.last_owner?
-          flash[:alert] = "You are last user"
+          flash[:alert] = "You are last owner"
         else
           @team.leave(current_user.id)
           flash[:notice] = "Successfully leaved"
