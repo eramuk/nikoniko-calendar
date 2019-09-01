@@ -105,13 +105,22 @@ class User < ApplicationRecord
   end
 
   def can_edit?(team)
-    role = user_teams.find_by(team_id: team.id)&.role_before_type_cast
+    role = role(team)
     !!role && role >= UserTeam.roles[:editor]
   end
 
   def owner?(team)
-    role = user_teams.find_by(team_id: team.id)&.role_before_type_cast
+    role = role(team)
     !!role && role == UserTeam.roles[:owner]
+  end
+
+  def role(team)
+    user_teams.find_by(team_id: team)&.role_before_type_cast
+  end
+
+  def roles(team)
+    role = role(team)
+    UserTeam.roles.select{|k, v| v <= role}
   end
 
   private
