@@ -16,7 +16,7 @@
         <% end %>
       </div>
       <div class="input-field col l4 m12 s12">
-        <%= f.select :role, current_user.roles(@team) %>
+        <%= f.select :role, current_user.roles(@team), selected: UserTeam.roles[:member] %>
         <%= f.label :role %>
       </div>
     </div>
