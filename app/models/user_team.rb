@@ -3,8 +3,8 @@ class UserTeam < ApplicationRecord
   belongs_to :team
 
   enum role: {
-    viewer: 0,
-    editor: 1,
+    guest: 0,
+    member: 1,
     owner: 2
   }
 

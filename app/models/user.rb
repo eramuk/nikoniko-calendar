@@ -104,9 +104,9 @@ class User < ApplicationRecord
     today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
   end
 
-  def can_edit?(team)
+  def member?(team)
     role = role(team)
-    !!role && role >= UserTeam.roles[:editor]
+    !!role && role >= UserTeam.roles[:member]
   end
 
   def owner?(team)
