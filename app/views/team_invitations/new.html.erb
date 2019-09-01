@@ -8,14 +8,14 @@
   </div>
   <%= form_with(model: @team_invitation) do |f| %>
     <div class=row>
-      <div class="input-field col l6 m12 s12">
+      <div class="input-field col l8 m12 s12">
         <%= f.label :email %>
         <%= f.email_field :email, class: "validate #{form_validate(@team_invitation, :email)} form-control" %>
         <% if message = form_error(@team_invitation, :email) %>
           <span class="helper-text" data-error="<%= message %>"></span>
         <% end %>
       </div>
-      <div class="input-field col l6 m12 s12">
+      <div class="input-field col l4 m12 s12">
         <%= f.select :role, UserTeam.roles.to_a %>
         <%= f.label :role %>
       </div>
