@@ -104,23 +104,24 @@ class User < ApplicationRecord
     today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
   end
 
+  def guest_or_higher?(team)
+    permission(team, :guest)
+  end
+
+  def member_or_higher?(team)
+    permission(team, :member)
+  end
+
+  def guest?(team)
+    user_teams.find_by(team_id: team).role == "guest"
+  end
+
   def member?(team)
-    role = role(team)
-    !!role && role >= UserTeam.roles[:member]
+    user_teams.find_by(team_id: team).role == "member"
   end
 
   def owner?(team)
-    role = role(team)
-    !!role && role == UserTeam.roles[:owner]
-  end
-
-  def role(team)
-    user_teams.find_by(team_id: team)&.role_before_type_cast
-  end
-
-  def roles(team)
-    role = role(team)
-    UserTeam.roles.select{|k, v| v <= role}
+    user_teams.find_by(team_id: team).role == "owner"
   end
 
   private
@@ -128,5 +129,11 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token  = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def permission(team, role)
+    role = user_teams.find_by(team_id: team)&.role_before_type_cast
+    roles = UserTeam.roles.select{|k, v| v <= role}
+    !!role && role >= UserTeam.roles[role]
   end
 end
