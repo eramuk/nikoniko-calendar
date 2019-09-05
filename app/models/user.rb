@@ -132,8 +132,7 @@ class User < ApplicationRecord
   end
 
   def permission(team, role)
-    role = user_teams.find_by(team_id: team)&.role_before_type_cast
-    roles = UserTeam.roles.select{|k, v| v <= role}
-    !!role && role >= UserTeam.roles[role]
+    user_role = user_teams.find_by(team_id: team)&.role_before_type_cast
+    !!user_role && user_role >= UserTeam.roles[role]
   end
 end
