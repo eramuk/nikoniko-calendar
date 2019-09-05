@@ -22,6 +22,10 @@ class TeamsController < ApplicationController
   end
 
   def edit
+    if current_user.guest?(@team)
+      flash[:alert] = "You don't have permission"
+      redirect_to action: "index"
+    end
   end
 
   def update
