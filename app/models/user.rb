@@ -128,6 +128,11 @@ class User < ApplicationRecord
     user_teams.find_by(team_id: team).role == "owner"
   end
 
+  def roles(team)
+    user_role = user_teams.find_by(team_id: team)&.role_before_type_cast
+    UserTeam.roles.select{|k, v| v <= user_role}
+  end
+
   private
 
   def create_activation_digest
