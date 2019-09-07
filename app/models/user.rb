@@ -112,6 +112,10 @@ class User < ApplicationRecord
     permission(team, :member)
   end
 
+  def owner_or_higher?(team)
+    permission(team, :owner)
+  end
+
   def guest?(team)
     user_teams.find_by(team_id: team).role == "guest"
   end

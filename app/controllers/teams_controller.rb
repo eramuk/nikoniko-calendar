@@ -22,13 +22,11 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    if current_user.guest?(@team)
-      flash[:alert] = "You don't have permission"
-      redirect_to action: "index"
-    end
+    permission_user(:member)
   end
 
   def update
+    permission_user(:member)
     if @team.update_attributes(team_params)
       flash[:notice] = "Successfully updated"
       redirect_to action: "index"
@@ -38,6 +36,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
+    permission_user(:owner)
     @team.with_lock do
       if @team.destroy
         flash[:notice] = "Successfully deleted"
@@ -91,5 +90,12 @@ class TeamsController < ApplicationController
 
   def get_team
     @team = current_user.teams.find(params[:id])
+  end
+
+  def permission_user(allow_role)
+    unless current_user.send(allow_role.to_s + "_or_higher?", @team)
+      flash[:alert] = "You don't have permission"
+      redirect_to action: "index"
+    end
   end
 end
