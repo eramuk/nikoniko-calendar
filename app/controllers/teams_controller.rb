@@ -24,11 +24,11 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    permission_user(:member)
+    permission_user(:owner) or return
   end
 
   def update
-    permission_user(:member)
+    permission_user(:owner) or return
     if @team.update_attributes(team_params)
       flash[:notice] = "Successfully updated"
       redirect_to action: "index"
@@ -38,7 +38,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    permission_user(:owner)
+    permission_user(:owner) or return
     @team.with_lock do
       if @team.destroy
         flash[:notice] = "Successfully deleted"
