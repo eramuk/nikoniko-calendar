@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  include TeamEditable
+
   before_action :logged_in_user
   before_action :get_team, only: [:edit, :update, :destroy, :leave]
 
@@ -90,12 +92,5 @@ class TeamsController < ApplicationController
 
   def get_team
     @team = current_user.teams.find(params[:id])
-  end
-
-  def permission_user(allow_role)
-    unless current_user.send(allow_role.to_s + "_or_higher?", @team)
-      flash[:alert] = "You don't have permission"
-      redirect_to action: "index"
-    end
   end
 end
