@@ -1,14 +1,18 @@
 class TeamInvitationsController < ApplicationController
+  include TeamEditable
+
   before_action :logged_in_user
 
   def new
     @team_invitation = TeamInvitation.new
     @team = current_user.teams.find(params[:team_id])
+    permission_user(:member) or return
     render "new"
   end
 
   def create
     @team = current_user.teams.find(team_invitation_params[:team_id])
+    permission_user(:member) or return
 
     if team_invitation_params[:email].empty?
       @team_invitation = TeamInvitation.new
