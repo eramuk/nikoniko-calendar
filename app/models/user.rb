@@ -128,8 +128,12 @@ class User < ApplicationRecord
     user_teams.find_by(team_id: team).role == "owner"
   end
 
+  def role(team)
+    user_teams.find_by(team_id: team).role
+  end
+
   def roles(team)
-    user_role = user_teams.find_by(team_id: team)&.role_before_type_cast
+    user_role = UserTeam.roles[role(team)]
     UserTeam.roles.select{|k, v| v <= user_role}
   end
 
