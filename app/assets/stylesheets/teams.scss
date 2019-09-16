@@ -6,6 +6,22 @@
   margin: 0;
 }
 
+.edit {
+  height: 64px;
+  line-height: 64px;
+
+  .input-field {
+    display: inline-block;
+    vertical-align: bottom;
+    margin: 0;
+  }
+
+  .button {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+}
+
 .index {
   display: table;
   width: 100%;
