@@ -71,14 +71,14 @@ class TeamsController < ApplicationController
   def leave
     if team_params[:users]
       user = User.find(team_params[:users].first)
-      @team = Team.find(params[:id])
-      permission_user(:owner) or return
+      team = Team.find(params[:id])
+      permission_user(:owner, team) or return
       begin
-        @team.with_lock do
-          if user.owner?(@team) && @team.last_owner?
+        team.with_lock do
+          if user.owner?(team) && team.last_owner?
             flash[:alert] = "Team owner is only one"
           else
-            @team.leave(user.id)
+            team.leave(user.id)
             flash[:notice] = "Successfully leaved"
           end
         end
