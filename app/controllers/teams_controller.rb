@@ -69,38 +69,38 @@ class TeamsController < ApplicationController
   end
 
   def leave
-    if team_params[:users]
-      user = User.find(team_params[:users].first)
-      team = Team.find(params[:id])
-      permission_user(:owner, team) or return
-      begin
-        team.with_lock do
-          if user.owner?(team) && team.last_owner?
-            flash[:alert] = "Team owner is only one"
-          else
-            team.leave(user.id)
-            flash[:notice] = "Successfully leaved"
-          end
+    begin
+      @team.with_lock do
+        if @team.last_owner?
+          flash[:alert] = "You are last owner"
+        else
+          @team.leave(current_user.id)
+          flash[:notice] = "Successfully leaved"
         end
-      rescue
-        flash[:alert] = "Failed to leaved"
       end
-      redirect_to action: "edit"
-    else
-      begin
-        @team.with_lock do
-          if @team.last_owner?
-            flash[:alert] = "You are last owner"
-          else
-            @team.leave(current_user.id)
-            flash[:notice] = "Successfully leaved"
-          end
-        end
-      rescue
-        flash[:alert] = "Failed to leaved"
-      end
-      redirect_to action: "index"
+    rescue
+      flash[:alert] = "Failed to leaved"
     end
+    redirect_to action: "index"
+  end
+
+  def banish
+    user = User.find(team_params[:users].first)
+    team = Team.find(params[:id])
+    permission_user(:owner, team) or return
+    begin
+      team.with_lock do
+        if user.owner?(team) && team.last_owner?
+          flash[:alert] = "Team owner is only one"
+        else
+          team.leave(user.id)
+          flash[:notice] = "Successfully leaved"
+        end
+      end
+    rescue
+      flash[:alert] = "Failed to leaved"
+    end
+    redirect_to action: "edit"
   end
 
   private
