@@ -38,7 +38,7 @@
             <%= f.select :role, UserTeam.roles.to_a, selected: UserTeam.roles[user.role(@team)] %>
           </p>
           <p class="delete">
-            <%= link_to content_tag(:i, 'delete', class: 'small material-icons'), leave_team_path(@team.id) %>
+            <%= link_to content_tag(:i, 'delete', class: 'small material-icons'), leave_team_path(@team.id, team: { users: [user.id] }), method: :post %>
           </p>
         </div>
       </div>

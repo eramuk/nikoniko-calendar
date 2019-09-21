@@ -69,25 +69,44 @@ class TeamsController < ApplicationController
   end
 
   def leave
-    begin
-      @team.with_lock do
-        if @team.last_owner?
-          flash[:alert] = "You are last owner"
-        else
-          @team.leave(current_user.id)
-          flash[:notice] = "Successfully leaved"
+    if team_params[:users]
+      user = User.find(team_params[:users].first)
+      @team = Team.find(params[:id])
+      permission_user(:owner) or return
+      begin
+        @team.with_lock do
+          if user.owner?(@team) && @team.last_owner?
+            flash[:alert] = "Team owner is only one"
+          else
+            @team.leave(user.id)
+            flash[:notice] = "Successfully leaved"
+          end
         end
+      rescue
+        flash[:alert] = "Failed to leaved"
       end
-    rescue
-      flash[:alert] = "Failed to leaved"
+      redirect_to action: "edit"
+    else
+      begin
+        @team.with_lock do
+          if @team.last_owner?
+            flash[:alert] = "You are last owner"
+          else
+            @team.leave(current_user.id)
+            flash[:notice] = "Successfully leaved"
+          end
+        end
+      rescue
+        flash[:alert] = "Failed to leaved"
+      end
+      redirect_to action: "index"
     end
-    redirect_to action: "index"
   end
 
   private
 
   def team_params
-    params.require(:team).permit(:name)
+    params.require(:team).permit(:name, users: [])
   end
 
   def get_team
