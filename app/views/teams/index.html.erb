@@ -1,6 +1,6 @@
 <% provide(:title, 'Index Teams') %>
 
-<div class="container">
+<div class="container index">
   <div class="row">
     <div class="col s12">
       <h2>Index Team</h2>
@@ -11,7 +11,7 @@
     <div class="row">
     <% end %>
       <div class="col l6 m12 s12">
-        <div class="index">
+        <div class="team">
           <p class="name"><%= team.name %></p>
           <p class="operation">
             <%= link_to "Edit", edit_team_path(team.id) if current_user.owner?(team) %>

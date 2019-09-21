@@ -2,8 +2,42 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.row {
-  margin: 0;
+.index {
+  .row {
+    margin: 0;
+  }
+
+  .team {
+    display: table;
+    width: 100%;
+    height: 64px;
+    margin: 0 0 20px;
+    word-wrap: break-word;
+    border: 1px;
+    border-style: solid;
+    border-color: #e0e0e0;
+    border-radius: 6px;
+
+    .name {
+      display: table-cell;
+      width: 45%;
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .operation {
+      display: table-cell;
+      width: auto;
+      padding: 10px;
+      text-align: right;
+      vertical-align: middle;
+
+      a {
+        margin-left: 2px;
+      }
+    }
+  }
 }
 
 .edit {
@@ -19,37 +53,5 @@
   .button {
     display: inline-block;
     vertical-align: bottom;
-  }
-}
-
-.index {
-  display: table;
-  width: 100%;
-  height: 64px;
-  margin: 0 0 20px;
-  word-wrap: break-word;
-  border: 1px;
-  border-style: solid;
-  border-color: #e0e0e0;
-  border-radius: 6px;
-
-  .name {
-    display: table-cell;
-    width: 45%;
-    padding: 10px;
-    text-align: left;
-    vertical-align: middle;
-  }
-
-  .operation {
-    display: table-cell;
-    width: auto;
-    padding: 10px;
-    text-align: right;
-    vertical-align: middle;
-
-    > a {
-      margin-left: 2px;
-    }
   }
 }
