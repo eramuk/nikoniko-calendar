@@ -38,7 +38,12 @@
             <%= f.select :role, UserTeam.roles.to_a, selected: UserTeam.roles[user.role(@team)] %>
           </p>
           <p class="delete">
-            <%= link_to content_tag(:i, 'delete', class: 'small material-icons'), banish_team_path(@team.id, team: { users: [user.id] }), method: :post %>
+            <%=
+              link_to content_tag(:i, 'delete', class: 'small material-icons'),
+                      banish_team_path(@team.id, team: { users: [user.id] }),
+                      method: :post,
+                      data: {confirm: "Are you sure you want to banish #{user.name}?"}
+            %>
           </p>
         </div>
       </div>
