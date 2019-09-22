@@ -85,8 +85,8 @@ class TeamsController < ApplicationController
   end
 
   def banish
-    user = User.find(team_params[:users].first)
-    team = Team.find(params[:id])
+    team = current_user.teams.find(params[:id])
+    user = team.users.find(team_params[:users].first)
     permission_user(:owner, team) or return
     begin
       team.with_lock do
