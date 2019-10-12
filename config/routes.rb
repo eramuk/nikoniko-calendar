@@ -19,5 +19,6 @@ Rails.application.routes.draw do
     get 'join', on: :collection
     post 'leave', on: :member
     post 'banish', on: :member
+    post 'role', on: :member
   end
 end

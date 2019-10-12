@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   include TeamEditable
 
   before_action :logged_in_user
-  before_action :get_team, only: [:edit, :update, :destroy, :leave]
+  before_action :get_team, only: [:edit, :update, :destroy, :leave, :role]
 
   def index
     @teams = current_user.teams
@@ -35,6 +35,12 @@ class TeamsController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def role
+    permission_user(:owner) or return
+    # TODO: roleの更新処理
+    render json: params
   end
 
   def destroy

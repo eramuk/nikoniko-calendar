@@ -25,17 +25,17 @@
       <h2>Users</h2>
     </div>
   </div>
-  <%= form_with(model: @team) do |f| %>
-    <% @team.users.where.not(id: current_user.id).each_with_index do |user, i| %>
-      <% if i.even? %>
-      <div class="row">
-      <% end %>
+  <% @team.users.where.not(id: current_user.id).each_with_index do |user, i| %>
+    <% if i.even? %>
+    <div class="row">
+    <% end %>
 
-      <div class="col l6 s12">
+    <div class="col l6 s12">
+      <%= form_with(model: @team) do |f| %>
         <div class="user">
           <p class="name"><%= user.name %></p>
           <p class="role">
-            <%= f.select :role, UserTeam.roles.to_a, selected: UserTeam.roles[user.role(@team)] %>
+            <%= f.select "user[#{user.id}]", UserTeam.roles.to_a, {selected: UserTeam.roles[user.role(@team)]}, {"data-user": user.id} %>
           </p>
           <p class="delete">
             <%=
@@ -46,11 +46,23 @@
             %>
           </p>
         </div>
-      </div>
-
-      <% if !i.even? || i == @team.users.size - 1 %>
-      </div>
       <% end %>
+    </div>
+
+    <% if !i.even? || i == @team.users.size - 1 %>
+    </div>
     <% end %>
   <% end %>
+  <script>
+    $(document).ready(function(){
+      $("select[id^=team_user]").change(function(){
+        var team = <%= @team.id =%>;
+        var user = $(this).data("user");
+        var role = $(this).val();
+        $.post(`/teams/${team}/role`, {id: team, team: {users: [user], roles: [role]}}, function(response){
+          console.log(response)
+        })
+      });
+    });
+  </script>
 </div>
