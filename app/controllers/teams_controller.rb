@@ -39,8 +39,13 @@ class TeamsController < ApplicationController
 
   def role
     permission_user(:owner) or return
-    # TODO: roleの更新処理
-    render json: params
+    user = User.find(params[:team][:users].first)
+    user_team = UserTeam.find_by(team_id: @team.id, user_id: user.id)
+    if user_team.update_attributes(role: params[:team][:roles].first.to_i)
+      flash[:notice] = "#{user.name} role changed to #{user.role(@team)}"
+    else
+      flash[:alert] = "Failed to change role #{user.role(@team)}"
+    end
   end
 
   def destroy

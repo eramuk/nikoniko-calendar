@@ -60,8 +60,8 @@
         var user = $(this).data("user");
         var role = $(this).val();
         $.post(`/teams/${team}/role`, {id: team, team: {users: [user], roles: [role]}}, function(response){
-          console.log(response)
-        })
+          window.location.reload();
+        });
       });
     });
   </script>
