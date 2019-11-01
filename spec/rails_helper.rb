@@ -63,7 +63,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before(:each, type: :system) do
-    Selenium::WebDriver::Chrome::Service.driver_path = "/mnt/c/Windows/chromedriver.exe"
+    Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROME_DRIVER']
     driven_by :selenium, using: :headless_chrome, screen_size: [1680, 1050]
   end
 end
