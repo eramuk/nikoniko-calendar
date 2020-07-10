@@ -6,7 +6,6 @@
       <p class="message">What's up?</p>
       <% Mood.scores.keys.each do |score| %>
         <%= form_with(model: @today_mood, local: true) do |f| %>
-          <%= f.hidden_field :date, value: @calendar_dates.last %>
           <%= f.hidden_field :score, value: score %>
           <%= image_submit_tag Mood.image_path(score), class: "emoji" %>
         <% end %>

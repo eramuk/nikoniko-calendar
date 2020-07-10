@@ -3,6 +3,7 @@ class MoodsController < ApplicationController
 
   def create
     @mood = current_user.moods.build(mood_params)
+    @mood.date = Time.current
     flash[:alert] = "Faild to post mood" unless @mood.save
     redirect_to root_url
   end
@@ -16,6 +17,6 @@ class MoodsController < ApplicationController
   private
 
   def mood_params
-    params.require(:mood).permit(:date, :score)
+    params.require(:mood).permit(:score)
   end
 end
