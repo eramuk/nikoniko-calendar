@@ -18,5 +18,6 @@ module NikonikoCalendar
 
     config.action_view.field_error_proc = proc { |html_tag, instance| html_tag }
     config.paths.add 'lib', eager_load: true
+    config.paths.add 'app/lib', eager_load: true
   end
 end
