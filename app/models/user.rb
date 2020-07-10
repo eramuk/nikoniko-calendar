@@ -85,15 +85,14 @@ class User < ApplicationRecord
   def calendar
     calendar = {}
 
-    teams = self.teams.order(:name).preload([users: :recent_moods]).each do |team|
-      calendar[team.name] = []
-      team.users.each do |user|
-        calendar[team.name].push({user.name.to_sym => fill_calendar(user.recent_moods)})
+    self.teams.order(:name).preload([users: :recent_moods]).each do |team|
+      calendar[team.name] = team.users.inject [] do |cal, user|
+        cal << {user.name.to_sym => fill_calendar(user.recent_moods)}
       end
     end
 
     if calendar.empty?
-      return {"" => [{name => fill_calendar(moods.recent_week(2))}]}
+      calendar = {"" => [{self.name => fill_calendar(self.moods.recent_week(2))}]}
     end
 
     calendar
