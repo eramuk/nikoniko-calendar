@@ -19,8 +19,8 @@
           <% @calendar.each do |team_name, team_calendars| %>
             <tr>
               <th class="name"><%= team_name %></th>
-              <% @calendar_dates.each do |date| %>
-                <th class="date"><%= date.day %></th>
+              <% @dates.each do |date| %>
+                <th class="date"><%= date[:date].day %><br><%= date[:day_of_the_week] %></th>
               <% end %>
             </tr>
             <% team_calendars.each do |user_calendars| %>

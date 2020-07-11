@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   def show
     @today_mood = @user.today_mood
     @calendar = @user.calendar
-    @calendar_dates = Calendar::week(2).map {|x| x[:date]}
+    @dates = Calendar::week(2)
     render "show"
   end
 
