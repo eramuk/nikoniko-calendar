@@ -99,8 +99,7 @@ class User < ApplicationRecord
   end
 
   def today_mood
-    today_mood = moods.today
-    today_mood.blank? ? moods.build(date: Time.current) : today_mood.first
+    self.moods.today.first_or_initialize(date: Time.current)
   end
 
   def guest_or_higher?(team)

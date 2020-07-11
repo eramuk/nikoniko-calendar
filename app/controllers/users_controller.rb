@@ -18,7 +18,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @today_mood = @user.today_mood
     @calendar = @user.calendar
     @dates = Calendar::week(2)
     render "show"
