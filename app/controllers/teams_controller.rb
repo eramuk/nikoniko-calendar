@@ -95,7 +95,7 @@ class TeamsController < ApplicationController
     redirect_to action: "index"
   end
 
-  def banish
+  def remove
     team = current_user.teams.find(params[:id])
     user = team.users.find(team_params[:users].first)
     permission_user(:owner, team) or return
@@ -105,11 +105,11 @@ class TeamsController < ApplicationController
           flash[:alert] = "Team owner is only one"
         else
           team.leave(user.id)
-          flash[:notice] = "Successfully leaved"
+          flash[:notice] = "Successfully removed"
         end
       end
     rescue
-      flash[:alert] = "Failed to leaved"
+      flash[:alert] = "Failed to removed"
     end
     redirect_to action: "edit"
   end

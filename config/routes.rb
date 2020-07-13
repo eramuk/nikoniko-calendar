@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :teams do
     get 'join', on: :collection
     post 'leave', on: :member
-    post 'banish', on: :member
+    post 'remove', on: :member
     post 'role', on: :member
   end
 end
