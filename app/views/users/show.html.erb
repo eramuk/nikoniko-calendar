@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="mood-selector">
-      <p class="message">What's up?</p>
+      <p class="message">How are you?</p>
       <% Mood.scores.keys.each do |score| %>
         <%= form_with(model: Mood, local: true) do |f| %>
           <%= f.hidden_field :score, value: score %>
