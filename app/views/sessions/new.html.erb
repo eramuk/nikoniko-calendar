@@ -5,7 +5,7 @@
 
   <div class="row">
     <%= form_for(:session, url: login_path) do |f| %>
-      <%= hidden_field_tag :redirect_url, @redirect_url %>
+      <%= hidden_field_tag :redirect_path, @redirect_path %>
 
       <div class="input-field">
         <%= f.label :email %>

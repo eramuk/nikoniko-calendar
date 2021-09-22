@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
+  before_action :validate_redirect_path
+
   def new
-    @redirect_url = params[:redirect_url]
+    @redirect_path = params[:redirect_path]
   end
 
   def create
@@ -9,8 +11,8 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in user
         remember(user)
-        redirect_url = params[:redirect_url] ? params[:redirect_url] : user
-        redirect_to redirect_url
+        redirect_path = params[:redirect_path] ? params[:redirect_path] : user
+        redirect_to redirect_path
       else
         message = "Account not activated. Check your email for the activation link."
         flash[:alert] = message
@@ -25,5 +27,13 @@ class SessionsController < ApplicationController
   def destroy
     log_out if logged_in?
     redirect_to root_url
+  end
+
+  private
+
+  def validate_redirect_path
+    if params[:redirect_path] && !params[:redirect_path].match(/^\//)
+      head :unprocessable_entity
+    end
   end
 end
