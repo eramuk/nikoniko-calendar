@@ -62,8 +62,7 @@ class TeamsController < ApplicationController
 
   def join
     invitation = TeamInvitation.find_by(token: params[:token])
-    binding.pry
-    if invitation&.recipient.id == current_user.id
+    if invitation&.recipient&.id == current_user.id
       begin
         invitation.team.with_lock do
           invitation.team.join(invitation.recipient.id, invitation.role)
