@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   include TeamEditable
 
   before_action :logged_in_user
-  before_action :get_team, only: [:edit, :update, :destroy, :leave, :role, :remove_user]
+  before_action :set_team, only: [:edit, :update, :destroy, :leave, :role, :remove_user]
 
   def index
     @teams = current_user.teams
@@ -120,7 +120,7 @@ class TeamsController < ApplicationController
     params.require(:team).permit(:name, users: [])
   end
 
-  def get_team
+  def set_team
     @team = current_user.teams.find(params[:id])
   end
 end
