@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   include TeamEditable
 
   before_action :logged_in_user
-  before_action :get_team, only: [:edit, :update, :destroy, :leave, :role]
+  before_action :get_team, only: [:edit, :update, :destroy, :leave, :role, :remove_user]
 
   def index
     @teams = current_user.teams
@@ -62,6 +62,7 @@ class TeamsController < ApplicationController
 
   def join
     invitation = TeamInvitation.find_by(token: params[:token])
+    binding.pry
     if invitation&.recipient.id == current_user.id
       begin
         invitation.team.with_lock do
@@ -95,16 +96,15 @@ class TeamsController < ApplicationController
     redirect_to action: "index"
   end
 
-  def remove
-    team = current_user.teams.find(params[:id])
-    user = team.users.find(team_params[:users].first)
-    permission_user(:owner, team) or return
+  def remove_user
+    user = @team.users.find(team_params[:users].first)
+    permission_user(:owner, @team) or return
     begin
-      team.with_lock do
-        if user.owner?(team) && team.last_owner?
+      @team.with_lock do
+        if user.owner?(@team) && @team.last_owner?
           flash[:alert] = "Team owner is only one"
         else
-          team.leave(user.id)
+          @team.leave(user.id)
           flash[:notice] = "Successfully removed"
         end
       end
