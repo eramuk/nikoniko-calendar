@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
   private
 
   def validate_redirect_path
-    if params[:redirect_path] && !params[:redirect_path].match(/^\//)
+    if !params[:redirect_path].blank? && !params[:redirect_path].match(/^\//)
       head :unprocessable_entity
     end
   end
